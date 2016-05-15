@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Users>
+	<User>
+		<name>Peti</name>
+		<level>1</level>
+	</User>
+	<User>
+		<name>Levi</name>
+		<level>1</level>
+	</User>
+		<User>
+		<name>Sanyi</name>
+		<level>2</level>
+	</User>
+		<User>
+		<name>Mucsi</name>
+		<level>2</level>
+	</User>
+<User>	
+	<name/>
+	<level/>
+</User>
+<User><name>pb</name><level>2</level></User></Users>
