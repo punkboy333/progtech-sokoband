@@ -4,6 +4,12 @@
   <artifactId>progtech-sokoband-game</artifactId>
   <version>1.10.2</version>
   
+  <inceptionYear>2016</inceptionYear>
+  <organization>
+  	<name>PunkBoy(c)</name>
+  </organization>
+  
+  
   <dependencies>
    <dependency>
             <groupId>junit</groupId>
