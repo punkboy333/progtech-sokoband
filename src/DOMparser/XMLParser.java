@@ -2,6 +2,8 @@ package DOMparser;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +78,10 @@ public class XMLParser {
 
 		List<Users> users = new ArrayList<Users>();
 		try{
-			xmlfile = new File("classes/InGame/User/User.xml");
-			
+			String fileinput= System.getProperties().getProperty("user.dir").toString();
+			Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/User/User.xml");
+			xmlfile=new File(path.toString());
+	
 			NodeList list =openFile("User");
 			
 		for(int j=0 ; j<list.getLength();j++)
@@ -181,8 +185,11 @@ public class XMLParser {
 	}
 	public void XmlWriter(String name, int level) {
 		
-		xmlfile = new File(
-				"classes/InGame/User/User.xml");
+		
+		String fileinput= System.getProperties().getProperty("user.dir").toString();
+			Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/User/User.xml");
+			xmlfile=new File(path.toString());
+	
 		NodeList nodlist = openFile("User");
 		if(nodlist!=null){
 		boolean isBeee=false;
