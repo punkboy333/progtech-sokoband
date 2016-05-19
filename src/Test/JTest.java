@@ -18,7 +18,7 @@ public class JTest {
 	@Before
 	public void inicialized(){
 		cel=engine.inicializeMap(-1);
-		player= new PlayerIndex(engine.GameMap);
+		player= new PlayerIndex(engine.gameMap);
 		}
 	
 	

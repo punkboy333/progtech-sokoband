@@ -2,15 +2,8 @@ package FxView;
 
 
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-
-import javax.jws.soap.SOAPBinding.Use;
-import javax.sound.midi.ControllerEventListener;
-import javax.swing.text.Position;
-
-import com.sun.javafx.application.LauncherImpl;
+import java.util.List;
 
 import DOMparser.Users;
 import FxView.SampleController.Pozition;
@@ -18,12 +11,12 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -34,8 +27,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
@@ -52,11 +44,15 @@ public class Main extends Application {
 		Scene scene = null;
 
 		try {
+			primaryStage.setMinHeight(600);
+			primaryStage.setMinWidth(600);
+			primaryStage.setMaxHeight(600);
+			primaryStage.setMaxWidth(600);
 			control.controltest=test;
 			root = (BorderPane) FXMLLoader.load(getClass().getResource("Sample.fxml"));
 			root.setBackground(
 					new Background(new BackgroundFill(Color.AQUA, new CornerRadii(20), new Insets(0, 0, 0, 0))));		
-			scene = new Scene(root, 800, 800);
+			scene = new Scene(root, 600, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

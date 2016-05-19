@@ -3,30 +3,21 @@ package FxView;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
 import DOMparser.Users;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import pkg.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import pkg.Engine;
+import pkg.MapValidator;
+import pkg.PlayerIndex;
 
 public class SampleController {
 	
@@ -40,7 +31,7 @@ public class SampleController {
 	private Image img4 = new Image("http://static1.grsites.com/archive/textures/red/red185.jpg");
 	private List<ImageView> listimgv = new ArrayList<ImageView>();
 	
-	private int [][] GameMap = null;
+	private int [][] gameMap = null;
 	
 
 	Engine engine = new Engine();
@@ -53,8 +44,8 @@ public class SampleController {
 	
 	public void celIsPlayer(){
 		
-		if(!cel.equals(playerpoz) && GameMap[cel.getX()][cel.getY()]!=3)
-			GameMap[cel.getX()][cel.getY()]=4;
+		if(!cel.equals(playerpoz) && gameMap[cel.getX()][cel.getY()]!=3)
+			gameMap[cel.getX()][cel.getY()]=4;
 	}
 	
 	
@@ -94,10 +85,10 @@ public class SampleController {
 	public void newGame(int level , Node root ){
 		engine.setMaxlevel();
 		cel = engine.inicializeMap(level);
-		playerpoz = new PlayerIndex(engine.GameMap);
-		GameMap=engine.GameMap;
+		playerpoz = new PlayerIndex(engine.gameMap);
+		gameMap=engine.gameMap;
 		grid = new GridPane();
-		reloadgrid(grid, GameMap, root);
+		reloadgrid(grid, gameMap, root);
 		engine.setLevel(level);
 		
 		
@@ -108,13 +99,13 @@ public class SampleController {
 	}
 	
 	public boolean isBeCho(){
-		MapValidator mapvalid = new MapValidator(0, false, GameMap);
+		MapValidator mapvalid = new MapValidator(0, false, gameMap);
 		return mapvalid.joe();
 	}
 	
 	
 	void runReloadGrid(Node root){
-		reloadgrid(grid, GameMap, root);
+		reloadgrid(grid, gameMap, root);
 		
 		/*if(isBeCho())
 		{}			{grid.setVisible(false);

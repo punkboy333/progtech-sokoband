@@ -1,8 +1,6 @@
 package pkg;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 
 public class MapValidator {
@@ -16,7 +14,7 @@ public class MapValidator {
 			cel = engine.inicializeMap(level);
 		else
 			cel = engine.myMapinicialzed(map);
-		player = new PlayerIndex(engine.GameMap);
+		player = new PlayerIndex(engine.gameMap);
 
 	}
 
@@ -82,7 +80,7 @@ public class MapValidator {
 
 	public int[][] lastMap() {
 
-		return engine.GameMap;
+		return engine.gameMap;
 	}
 
 	public boolean joe() {
@@ -91,9 +89,9 @@ public class MapValidator {
 		if (player == null || cel == null)
 			return false;
 		boolean isBox = false;
-		for (i = 0; i < engine.GameMap.length; i++)
-			for (j = 0; j < engine.GameMap.length; j++) {
-				if (engine.GameMap[i][j] == 3) {
+		for (i = 0; i < engine.gameMap.length; i++)
+			for (j = 0; j < engine.gameMap.length; j++) {
+				if (engine.gameMap[i][j] == 3) {
 					isBox = true;
 					break;
 				}
@@ -101,7 +99,7 @@ public class MapValidator {
 		if (!isBox)
 			return false;
 
-		Node start = new Node(player, null, null, operator(), engine.GameMap);
+		Node start = new Node(player, null, null, operator(), engine.gameMap);
 
 		if (engine.celboolean(cel))
 			return true;
@@ -109,13 +107,13 @@ public class MapValidator {
 		while (true) {
 			//System.out.println("");
 			if (!cel.equals(player))
-				engine.GameMap[cel.x][cel.y] = 4;
+				engine.gameMap[cel.x][cel.y] = 4;
 			// 3
 			if (start.oplis.isEmpty()) {
 				if (start.parent != null) {
 
 					start = start.parent;
-					engine.GameMap = start.map;
+					engine.gameMap = start.map;
 				} else
 					return false;
 			} else {
@@ -130,8 +128,8 @@ public class MapValidator {
 				Node start1 = new Node(player1, start, vektor, operator(), lastMap());
 				isbe = false;
 
-				for (i = 0; i < engine.GameMap.length; i++) {
-					for (j = 0; j < engine.GameMap.length; j++) {
+				for (i = 0; i < engine.gameMap.length; i++) {
+					for (j = 0; j < engine.gameMap.length; j++) {
 						if (start1.map[i][j] == 2 && !(i == start1.player.x && j == start1.player.y))
 							start1.map[i][j] = 1;
 							//System.out.print(start1.map[i][j]);
@@ -142,7 +140,7 @@ public class MapValidator {
 				for (Node cs = start; cs != null; cs = cs.parent) {
 					if (cs.player.equals(start1.player)) {
 						isbe = true;
-						engine.GameMap = start.map;
+						engine.gameMap = start.map;
 						break;
 					}
 				}
@@ -151,10 +149,10 @@ public class MapValidator {
 
 					start = start1;
 
-					for (i = 0; i < engine.GameMap.length; i++) {
-						for (j = 0; j < engine.GameMap.length; j++) {
-							if (engine.GameMap[i][j] == 2 && !(i == start.player.x && j == start.player.y))
-								engine.GameMap[i][j] = 1;
+					for (i = 0; i < engine.gameMap.length; i++) {
+						for (j = 0; j < engine.gameMap.length; j++) {
+							if (engine.gameMap[i][j] == 2 && !(i == start.player.x && j == start.player.y))
+								engine.gameMap[i][j] = 1;
 						}
 					}
 					// 2
