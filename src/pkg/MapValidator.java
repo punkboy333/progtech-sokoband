@@ -123,24 +123,9 @@ public class MapValidator {
 				String vektor = start.oplis.getFirst();
 				start.oplis.removeFirst();
 				PlayerIndex player1 = (engine.playerMove(start.player, vektor.charAt(0)));
-				if (start.player.equals(player1))
-					continue;
+
 				boolean isbe = false;
 				
-			/*	for (i = 0; i < engine.GameMap.length; i++) {
-					for (j = 0; j < engine.GameMap.length; j++) {
-						if (start.map[i][j] == 3
-								&& ((start.map[i][j + 1] == 0 && start.map[i + 1][j] == 0)
-										|| (start.map[i][j - 1] == 0 && start.map[i + 1][j] == 0)
-										|| (start.map[i][j + 1] == 0 && start.map[i - 1][j] == 0)
-										|| (start.map[i][j - 1] == 0 && start.map[i - 1][j] == 0))) {
-							//start.map;
-							isbe=true;
-							
-						}
-					}
-				}*/
-				if(isbe)continue;
 				
 				Node start1 = new Node(player1, start, vektor, operator(), lastMap());
 				isbe = false;
@@ -155,7 +140,7 @@ public class MapValidator {
 				}
 
 				for (Node cs = start; cs != null; cs = cs.parent) {
-					if (cs.equals(start1)) {
+					if (cs.player.equals(start1.player)) {
 						isbe = true;
 						engine.GameMap = start.map;
 						break;
@@ -170,21 +155,16 @@ public class MapValidator {
 						for (j = 0; j < engine.GameMap.length; j++) {
 							if (engine.GameMap[i][j] == 2 && !(i == start.player.x && j == start.player.y))
 								engine.GameMap[i][j] = 1;
-							//System.out.print(engine.GameMap[i][j] + " ");
 						}
-						//System.out.println("");
 					}
-					//for(int k = 0 ; k<100000000;k++)
-					//	for(int h = 0 ; h<100;h++){h+=1;h-=1;}
-						
-					//engine.GameMap = start.map;
 					// 2
+					
 					try{
 					if (engine.celboolean(cel))
-						return true;}
-					catch(Exception e){e.getMessage();
+						return true;
+					}catch(Exception e){e.getMessage();}
 						
-					}
+					
 				}
 			}
 
