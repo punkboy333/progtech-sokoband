@@ -171,7 +171,7 @@ public class Main extends Application {
 		try{
 		ObservableList<Users> items =FXCollections.observableArrayList (
 			    control.getUsers());
-		
+		player.autosize();
 		player.setItems(items);
 		}catch(Exception e) {System.out.println("No saved game");}
 		List<Node> nlist = new ArrayList<Node>();
@@ -183,7 +183,7 @@ public class Main extends Application {
 		
 		control.visible(root, grid , pozition.CENTER());
 		control.gridOption(grid);
-		grid.setPadding(new Insets(200));
+		grid.setPadding(new Insets(100,100,100,100));
 		grid.setHgap(20);
 		grid.setVgap(20);
 		control.gridControl(grid, nlist, 1);

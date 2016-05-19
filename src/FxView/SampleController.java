@@ -59,13 +59,13 @@ public class SampleController {
 	public void gridOption(GridPane grid){
 		grid.autosize();
 		 grid.setAlignment(Pos.TOP_CENTER);
-		 grid.setPadding(new Insets(200,0,0,100));
+		 grid.setPadding(new Insets(100,100,100,100));
 		
 	}
 	public Button buttonControl(String name){
 		Button button = new Button();
 		button.setText(name);
-		button.setPadding(new Insets(10));
+		button.setPadding(new Insets(10,10,10,10));
 		button.setVisible(true);
 		return button;
 	}
