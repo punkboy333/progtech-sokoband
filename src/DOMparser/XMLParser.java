@@ -43,9 +43,9 @@ public class XMLParser {
 		
 		
 	}
-	public int[][] getMap(int level){
-		DomRead(level);
-		return GameMap;
+	public SokoBandMap getMap(int level , int hard){
+		return DomRead(level , hard);
+		
 	}
 	public NodeList openFile( String name) {
 		
@@ -88,7 +88,7 @@ public class XMLParser {
 		{
 			Element ellem =(Element)list.item(j);
 			try{
-				users.add(new Users(ellem.getElementsByTagName("name").item(0).getTextContent(), Integer.parseInt(ellem.getElementsByTagName("level").item(0).getTextContent())));
+				users.add(new Users(ellem.getElementsByTagName("name").item(0).getTextContent(), Integer.parseInt(ellem.getElementsByTagName("level").item(0).getTextContent()),Integer.parseInt(ellem.getElementsByTagName("hard").item(0).getTextContent())));
 			}catch(Exception e){System.out.println("no user");;}
 			}
 		xmlfile.exists();
@@ -101,25 +101,42 @@ public class XMLParser {
 		GameMap = new int [i.length][i.length];
 		GameMap=i;
 	}		
-	private void DomRead(int level){
-		
+	private SokoBandMap DomRead(int level , int hard){
+		SokoBandMap sokobandMap = new SokoBandMap();
 		
 		try{
 			String fileinput= System.getProperties().getProperty("user.dir").toString();
-			Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Map/"+level+".xml");
+			Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Map/Map.xml");
 			xmlfile = new File(path.toString());
 
-		NodeList list =openFile("row");
-		
-		int max=list.getLength();
-		@SuppressWarnings("unused")
-		int ertek;
+		NodeList list =openFile("Map");
+		Element elem = null;
+		for(int i=0 ; i<list.getLength() ;i++)
+		{ 
+			elem = (Element) list.item(i);
+			System.out.println("Ellem :"+elem.getAttribute("id").toString() +"hl:"+hard);
+			if(elem.getAttribute("id").toString().equals(String.valueOf(hard)) 
+				&& Integer.parseInt(elem.getElementsByTagName("level").item(0).getTextContent())==level){
+				
+				break;
+			}
+			else elem = null;
+		}
+		if (elem == null)
+			maxlevel=true;
+			
+		sokobandMap.setHard(Integer.parseInt(elem.getAttribute("id").toString()));
+		sokobandMap.setLevel(Integer.parseInt(elem.getElementsByTagName("level").item(0).getTextContent()));
+		sokobandMap.setName(elem.getElementsByTagName("name").item(0).getTextContent());
+		Node node = elem.getElementsByTagName("rows").item(0);
+			elem = (Element) node;
+		int max=elem.getElementsByTagName("row").getLength();
 
 		matrixBuilder(max);
 		for(int i=0 ; i<max ;i++)
 			for(int j=0 ; j<max;j++)
 			{
-				Element ellem =(Element)list.item(i);
+				Element ellem =(Element)elem.getElementsByTagName("row").item(i);
 				try{
 				GameMap[i][j]=Integer.parseInt(ellem.getElementsByTagName("colum").item(j).getTextContent());
 				}catch(Exception e){System.out.println("NOT_GAME_XML");}
@@ -136,10 +153,11 @@ public class XMLParser {
 		for(int i=0 ; i<test.length ;i++)
 			for(int j=0 ; j<test.length;j++)
 				GameMap[i][j]=test[i][j];
+	}
+		sokobandMap.setMap(GameMap);
+		return sokobandMap;
 	}	
-		
-	}	
-	public void newUsers(String name ,int level){
+	public void newUsers(String name ,int level , int hard){
 		
 		if (name != null) {
 			NodeList nodlist = openFile("Users");
@@ -149,11 +167,13 @@ public class XMLParser {
 						node = nodlist.item(0);
 			Element namenode = doc.createElement("name");
 			Element levelnode = doc.createElement("level");
+			Element hardnode = doc.createElement("hard");
 			namenode.setTextContent(name);
 			levelnode.setTextContent(String.valueOf(level));
+			hardnode.setTextContent(String.valueOf(hard));
 			ellem.appendChild(namenode);
 			ellem.appendChild(levelnode);
-			
+			ellem.appendChild(hardnode);
 			node.appendChild(ellem);
 			
 			try {
@@ -168,11 +188,13 @@ public class XMLParser {
 		}
 			}
 	}
-	public void modifiUserLevel(int level ,Element ellem){
+	public void modifiUserLevel(int level,int hard ,Element ellem){
 		
 		
 		//Document doc = null;
 		ellem.getElementsByTagName("level").item(0).setTextContent(String.valueOf(level));
+		ellem.getElementsByTagName("hard").item(0).setTextContent(String.valueOf(hard));
+		
 		try {
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			StreamResult result = new StreamResult(new FileOutputStream(xmlfile.toString()));
@@ -185,7 +207,7 @@ public class XMLParser {
 		}
 		
 	}
-	public void XmlWriter(String name, int level) {
+	public void XmlWriter(String name, int level , int hard) {
 		
 		
 		String fileinput= System.getProperties().getProperty("user.dir").toString();
@@ -205,9 +227,9 @@ public class XMLParser {
 		}
 		
 		if(isBeee)
-			modifiUserLevel(level ,  ellem);
+			modifiUserLevel(level ,hard,  ellem);
 		else
-			newUsers(name, level );}
+			newUsers(name, level , hard );}
 		xmlfile.exists();
 		
 	}

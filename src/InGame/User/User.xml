@@ -1,2 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Users>
-<User><name>Pb</name><level>2</level></User><User><name>Karola</name><level>3</level></User></Users>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Users>
+	<User>
+		<name>Pb</name>
+		<level>2</level>
+		<hard>1</hard>
+	</User>
+	<User>
+		<name>Karola</name>
+		<level>3</level>
+		<hard>1</hard>
+	</User>
+</Users>

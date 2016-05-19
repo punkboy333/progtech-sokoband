@@ -1,9 +1,6 @@
-package pkg;
+package DOMparser;
 
 import java.util.List;
-
-import DOMparser.Users;
-import DOMparser.XMLParser;
 
 public class DOMComunicatorImp implements DomComunicator{
 
@@ -15,8 +12,8 @@ public class DOMComunicatorImp implements DomComunicator{
 		return parser.getUsers();
 	}
 	@Override
-	public int[][] getMap(int level){
-		 return parser.getMap(level);		
+	public SokoBandMap getMap(int level , int hard){
+		 return parser.getMap(level,hard);		
 	}
 	@Override
 	public boolean getMaxlevel() {
@@ -27,8 +24,8 @@ public class DOMComunicatorImp implements DomComunicator{
 		parser.setMaxLevel();
 	}
 	@Override
-	public void addUser(String name , int level) {
-		parser.XmlWriter(name, level);
+	public void addUser(String name , int level , int hard) {
+		parser.XmlWriter(name, level , hard);
 		
 	}
 

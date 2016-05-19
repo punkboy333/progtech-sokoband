@@ -28,7 +28,7 @@
       </resource>
     </resources>
      <testSourceDirectory>
-  ${basedir}/src/Test/
+  ${basedir}/src/Test/java
   </testSourceDirectory>
     <plugins>
       <plugin>

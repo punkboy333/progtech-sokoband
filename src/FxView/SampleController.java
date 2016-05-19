@@ -31,7 +31,7 @@ public class SampleController {
 	private Image img4 = new Image("http://static1.grsites.com/archive/textures/red/red185.jpg");
 	private List<ImageView> listimgv = new ArrayList<ImageView>();
 	
-	private int [][] gameMap = null;
+	public int [][] gameMap = null;
 	
 
 	Engine engine = new Engine();
@@ -59,7 +59,7 @@ public class SampleController {
 	public void gridOption(GridPane grid){
 		grid.autosize();
 		 grid.setAlignment(Pos.TOP_CENTER);
-		 grid.setPadding(new Insets(100,100,100,100));
+		 grid.setPadding(new Insets(100,100,10,100));
 		
 	}
 	public Button buttonControl(String name){
@@ -82,9 +82,22 @@ public class SampleController {
 	
 	
 	GridPane grid;
-	public void newGame(int level , Node root ){
+	GridPane grid2;
+	public void newGame(int level,int hard , Node root ){
+
 		engine.setMaxlevel();
-		cel = engine.inicializeMap(level);
+		cel = engine.inicializeMap(level, hard);
+		grid2 = new GridPane();
+		
+		Text mapname = new Text("Name :"+engine.getMapInfomation().getName());
+		Text maphard = new Text("  Difficulty:"+String.valueOf(engine.getMapInfomation().getHard()));
+		grid2.add(mapname, 0, 0);
+		grid2.add(maphard, 1, 0);
+		grid2.autosize();
+		grid2.setAlignment(Pos.TOP_CENTER);
+		grid2.setPadding(new Insets(0,0,10,0));
+		visible(root, grid2, pozition.BOTTON());
+		
 		playerpoz = new PlayerIndex(engine.gameMap);
 		gameMap=engine.gameMap;
 		grid = new GridPane();
@@ -96,11 +109,16 @@ public class SampleController {
 	}
 	public void endGame(){
 		grid.setVisible(false);
+		grid2.setVisible(false);
 	}
 	
-	public boolean isBeCho(){
-		MapValidator mapvalid = new MapValidator(0, false, gameMap);
-		return mapvalid.joe();
+	public List<String> isBeCho(){
+		int [][] map=gameMap;
+		MapValidator mapvalid = new MapValidator(0, hardlevel,false, map);
+		List<String> op = mapvalid.joe();
+		for(int i = 0 ; i<op.size();i++)
+		System.out.println(op.get(i));
+		return op;
 	}
 	
 	
@@ -112,23 +130,30 @@ public class SampleController {
 		setingame(false);
 	Text tx = new Text("You Lose!!!");
 	visible(root, tx, "CENTER");}*/
-		
+
 		if(engine.celboolean(cel) && !controltest)
-			{newGame(engine.getLevel()+1, root);
+			{newGame(engine.getLevel()+1,hardlevel ,root);
 			if(engine.getMaxlevel() && !controltest)
 			{grid.setVisible(false);
+			grid2.setVisible(false);
 			setingame(false);
 		Text tx = new Text("You Win!!!");
 		visible(root, tx, "CENTER");}
 			}
 			else
 				if(engine.celboolean(cel) && controltest)
-				newGame(engine.getLevel(), root);
+				newGame(engine.getLevel(),hardlevel, root);
 	
 	}
-	
+	int hardlevel = 0;
+	public void setHardLevel(int hardLevel){
+		this.hardlevel=hardLevel;
+	}	
+	public int getHardLevel(){
+		return hardlevel;
+	}
 	public void setUser(String name) {
-		engine.setUser(name, engine.getLevel());
+		engine.setUser(name, engine.getLevel() , hardlevel);
 		}
 	
 		public void reloadgrid(GridPane grid, int[][] matrix , Node root) {
@@ -175,7 +200,10 @@ public class SampleController {
 		test=bool;
 	}
 
-	
+	public void movControl(String s){
+		playerpoz = engine.playerMove(playerpoz, s.charAt(0));
+		
+	}
 		public void keyControl(KeyEvent ke){
 			if (ke.getCode().equals(KeyCode.W) && getingameg()) {
 
@@ -229,9 +257,9 @@ public class SampleController {
 	}
 	
 	public boolean controltest;
-	
+	Pozition pozition = new Pozition();
 public void visible(Object root , Object children ,  String poz ) {
-		Pozition pozition = new Pozition();
+		
 		BorderPane rootview = (BorderPane) root;
 	if(poz==pozition.CENTER())	
 	rootview.setCenter((Node)children);

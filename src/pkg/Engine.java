@@ -3,7 +3,9 @@ package pkg;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
-
+import DOMparser.DOMComunicatorImp;
+import DOMparser.DomComunicator;
+import DOMparser.SokoBandMap;
 import DOMparser.Users;;
 
 public class Engine {
@@ -28,8 +30,8 @@ public class Engine {
 		return mapbuilder.getUsers();
 	}
 
-	public void setUser(String name , int level) {
-		mapbuilder.addUser(name, level);
+	public void setUser(String name , int level ,int hard) {
+		mapbuilder.addUser(name, level , hard);
 	}
 	
 	public PlayerIndex myMapinicialzed(int[][] map) {
@@ -43,9 +45,14 @@ public class Engine {
 		return null;
 
 	}
-
-	public PlayerIndex inicializeMap(int level) {
-		gameMap = mapbuilder.getMap(level);
+	private SokoBandMap sokobandMap;
+	public SokoBandMap  getMapInfomation(){
+		return sokobandMap;
+	}
+	
+	public PlayerIndex inicializeMap(int level , int hard) {
+		sokobandMap = mapbuilder.getMap(level , hard);
+		gameMap = sokobandMap.getMap();
 		int x = 0, y = 0;
 		for (x = 0; x < gameMap.length; x++)
 			for (y = 0; y < gameMap.length; y++)
@@ -214,7 +221,7 @@ public class Engine {
 	public static void main(String[] args) {
 
 		Engine enginerun = new Engine();
-		PlayerIndex cel = enginerun.inicializeMap(1);
+		PlayerIndex cel = enginerun.inicializeMap(1 ,1);
 		PlayerIndex playerindex = new PlayerIndex(enginerun.gameMap);
 		while (true) {
 

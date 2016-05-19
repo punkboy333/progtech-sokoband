@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.*;
 
+import DOMparser.DomComunicator;
 import DOMparser.Users;
 import pkg.*;
 
@@ -17,7 +18,7 @@ public class JTest {
 	PlayerIndex cel;
 	@Before
 	public void inicialized(){
-		cel=engine.inicializeMap(-1);
+		cel=engine.inicializeMap(-1 ,1);
 		player= new PlayerIndex(engine.gameMap);
 		}
 	
@@ -84,7 +85,7 @@ public class JTest {
 					 {0,0,1,1,2,0} // 5
 					 };//6
 		
-		MapValidator mapvalidator = new MapValidator(-1 , false ,i);
+		MapValidator mapvalidator = new MapValidator(-1 ,1, false ,i);
 		
 		assertEquals(true, mapvalidator.joe());
 		

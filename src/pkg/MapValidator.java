@@ -1,6 +1,7 @@
 package pkg;
 
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class MapValidator {
@@ -9,9 +10,9 @@ public class MapValidator {
 	PlayerIndex player;
 	PlayerIndex cel;
 
-	public MapValidator(int level, boolean xmlmap, int[][] map) {
+	public MapValidator(int level,int hard, boolean xmlmap, int[][] map) {
 		if (xmlmap)
-			cel = engine.inicializeMap(level);
+			cel = engine.inicializeMap(level , hard);
 		else
 			cel = engine.myMapinicialzed(map);
 		player = new PlayerIndex(engine.gameMap);
@@ -83,11 +84,11 @@ public class MapValidator {
 		return engine.gameMap;
 	}
 
-	public boolean joe() {
+	public List<String> joe() {
 		int i, j;
 
 		if (player == null || cel == null)
-			return false;
+			return null;
 		boolean isBox = false;
 		for (i = 0; i < engine.gameMap.length; i++)
 			for (j = 0; j < engine.gameMap.length; j++) {
@@ -97,12 +98,12 @@ public class MapValidator {
 				}
 			}
 		if (!isBox)
-			return false;
+			return null;
 
 		Node start = new Node(player, null, null, operator(), engine.gameMap);
 
 		if (engine.celboolean(cel))
-			return true;
+			return null;
 
 		while (true) {
 			//System.out.println("");
@@ -115,7 +116,7 @@ public class MapValidator {
 					start = start.parent;
 					engine.gameMap = start.map;
 				} else
-					return false;
+					return null;
 			} else {
 				// 4
 				String vektor = start.oplis.getFirst();
@@ -159,7 +160,12 @@ public class MapValidator {
 					
 					try{
 					if (engine.celboolean(cel))
-						return true;
+						{
+						LinkedList<String> op = new LinkedList<String>();
+						for(Node cs = start; cs!=null ; cs=cs.parent)
+						op.addFirst(cs.vector);
+						return op;
+						}
 					}catch(Exception e){e.getMessage();}
 						
 					

@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -152,30 +153,56 @@ public class Main extends Application {
 
 			@Override
 			public void handle(MouseEvent mouseclic) {
-				
-					first=false;
-					control.endGame();
-					initmenu();
-					control.setingame(false);
-					menu.setVisible(control.getingameg());
-					if(userName.length()>1)
-						control.setUser(userName);
+					
+						//passedmap();
+					
+						control.setingame(false);	
+						first=false;
+						control.endGame();
+						
+						initmenu();
+						menu.setVisible(control.getingameg());
+						if(userName.length()>1)
+							control.setUser(userName);
+						
 					}
 		});
 		
 	}
+	public void passedmap(){
+		List<String>op =control.isBeCho();
+		if(op!=null){
+		op.remove(0);
+		op.remove(op.size()-1);
+		root.getCenter().setVisible(false);
+		for (String string : op) {
+			control.movControl(string);
+			control.celIsPlayer();
+			control.runReloadGrid(root);
+			
+			for(int i = 0 ; i<100; i++)
+				for(int j = 0 ; j<1000 ; j++)
+					System.out.println(string);;
+				
+		}	
+		}
+		
+	}
+	
+	
 	public void subMenu(){
 		
 		ListView<Users> player = new ListView<Users>();
 		Button loadGame =control.buttonControl("Load Game");
 		try{
+			
 		ObservableList<Users> items =FXCollections.observableArrayList (
 			    control.getUsers());
 		player.autosize();
 		player.setItems(items);
 		}catch(Exception e) {System.out.println("No saved game");}
 		List<Node> nlist = new ArrayList<Node>();
-		//buttonlist.removeAll(buttonlist);
+		
 		
 		nlist.add(player);
 		nlist.add(loadGame);
@@ -202,7 +229,8 @@ public class Main extends Application {
 						public void handle(MouseEvent event) {
 								if(selecteduser!=null){
 									userName=selecteduser.getName();
-								control.newGame(selecteduser.getLevel() ,root);
+									control.setHardLevel(selecteduser.getHard());
+									control.newGame(selecteduser.getLevel(),selecteduser.getHard(),root);
 								control.setingame(true);
 							grid.setVisible(false);
 							menu.setVisible(control.getingameg());}
@@ -212,19 +240,22 @@ public class Main extends Application {
 		});
 		
 	}
+	int hardlevel;
 	public void nickmenu(){
 		
 		Text nickname = new Text("NickName:");
 		TextField name = new TextField();
 		Button ok = control.buttonControl("Ok");
+		TextField hard = new TextField();
+		Text Difficulty = new Text("Difficulty:");
 		
-	
 		GridPane grid = new GridPane();
 		
 		grid.add(nickname, 0, 0);
 		grid.add(name, 1, 0);
-		grid.add(ok, 0, 1);
-		
+		grid.add(Difficulty, 0, 1);
+		grid.add(hard, 1, 1);
+		grid.add(ok, 0, 2);
 		control.visible(root, grid , pozition.CENTER());
 		control.gridOption(grid);
 		grid.setPadding(new Insets(200));
@@ -232,17 +263,25 @@ public class Main extends Application {
 		grid.setVgap(20);
 		
 		ok.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+			
 			@Override
 			public void handle(MouseEvent event) {
 				userName=name.getText();
 				if(userName.length()>1)
 				control.setUser(userName);
-				
+				System.out.println(hard.getText());
+				try{Integer.parseInt(hard.getText());
+					hardlevel=Integer.parseInt(hard.getText());
+					if(hardlevel>3)hardlevel=3;
+					if(hardlevel<1)hardlevel=1;
+					}catch (Exception e) {
+						hardlevel=1;
+					}
+				control.setHardLevel(hardlevel);
 			if(!test)	
-			control.newGame(1 ,root);
+			control.newGame(1 ,hardlevel,root);
 			else
-				control.newGame(-1 ,root);
+				control.newGame(-1,hardlevel ,root);
 				
 				control.setingame(true);
 				grid.setVisible(false);
