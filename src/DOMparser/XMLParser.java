@@ -105,7 +105,9 @@ public class XMLParser {
 		
 		
 		try{
-		xmlfile = new File("classes/InGame/Map/"+level+".xml");
+			String fileinput= System.getProperties().getProperty("user.dir").toString();
+			Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Map/"+level+".xml");
+			xmlfile = new File(path.toString());
 
 		NodeList list =openFile("row");
 		
