@@ -5,15 +5,12 @@ package FxView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import DOMparser.Users;
 import FxView.SampleController.Pozition;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -54,11 +51,10 @@ public class Main extends Application {
 			primaryStage.setMaxWidth(600);
 			control.controltest=test;
 			control.pictureInit();
-			root = (BorderPane) FXMLLoader.load(getClass().getResource("Sample.fxml"));
+			root = new BorderPane() ;
 			root.setBackground(
 					new Background(new BackgroundFill(Color.AQUA, new CornerRadii(20), new Insets(0, 0, 0, 0))));		
 			scene = new Scene(root, 600, 600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {

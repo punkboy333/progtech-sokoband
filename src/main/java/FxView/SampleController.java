@@ -1,6 +1,5 @@
 package FxView;
 
-import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import DOMparser.Users;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,11 +28,11 @@ public class SampleController {
 	private PlayerIndex playerpoz;
 	private PlayerIndex cel;
 	
-	private Image img0 = new Image("http://blizzardskies.com/bz/bg/graybg53.gif");
-	private Image img1 = new Image("http://3.bp.blogspot.com/-05Z-np4NrmY/T-t2LKi4m8I/AAAAAAAACC4/E4Yhz9QsyIA/s1600/seamless_green_background_for_web_sites.jpg");
-	private Image img2 = new Image("http://i34.tinypic.com/2lcwy0o.png");
-	private Image img3 = new Image("http://corrupteddevelopment.com/wp-content/uploads/2012/04/cardboard-box-icon-256.jpg");
-	private Image img4 = new Image("http://static1.grsites.com/archive/textures/red/red185.jpg");
+	private Image img0 ;
+	private Image img1 ;
+	private Image img2 ;
+	private Image img3 ;
+	private Image img4 ;
 	private List<ImageView> listimgv = new ArrayList<ImageView>();
 	
 	public int [][] gameMap = null;
@@ -73,7 +71,7 @@ public class SampleController {
 	
 	public void reLoadActual(Node root){
 		System.out.println("\naktualmap:"+engine.getLevel());
-		newGame(engine.getLevel(), 1, root);
+		newGame(engine.getLevel(), hardlevel, root);
 	}
 	
 	public LinkedList<String> passedmap(Node root , LinkedList<String> op ){
