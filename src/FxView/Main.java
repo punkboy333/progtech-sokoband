@@ -3,13 +3,17 @@ package FxView;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import DOMparser.Users;
 import FxView.SampleController.Pozition;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -50,6 +53,7 @@ public class Main extends Application {
 			primaryStage.setMaxHeight(600);
 			primaryStage.setMaxWidth(600);
 			control.controltest=test;
+			control.pictureInit();
 			root = (BorderPane) FXMLLoader.load(getClass().getResource("Sample.fxml"));
 			root.setBackground(
 					new Background(new BackgroundFill(Color.AQUA, new CornerRadii(20), new Insets(0, 0, 0, 0))));		
@@ -69,6 +73,7 @@ public class Main extends Application {
 					control.keyControl(ke);
 					control.celIsPlayer();
 					control.runReloadGrid(root);
+					
 					}
 					
 					
@@ -82,11 +87,18 @@ public class Main extends Application {
 		
 	}
 	Button menu ;
+	Button step;
+	GridPane menugrid;
 	public void back(){
 		menu=
 		control.buttonControl("Back");
+		step = control.buttonControl("Step");
+		menugrid = new GridPane();
 		
-		control.visible(root, menu, pozition.TOP());
+		step.setVisible(false);
+		menugrid.add(menu, 0, 0);
+		menugrid.add(step, 1, 0);
+		control.visible(root, menugrid, pozition.TOP());
 		menu.setVisible(false);
 		
 	}
@@ -153,9 +165,37 @@ public class Main extends Application {
 
 			@Override
 			public void handle(MouseEvent mouseclic) {
-					
-						//passedmap();
-					
+				control.setingame(false);	
+					try{
+						if(!step.isVisible()){
+							control.reLoadActual(root);	
+							List<String> op = control.isBeCho();
+							control.reLoadActual(root);
+					for (String string : op) {
+						lop.add(string);
+					}
+					step.setVisible(true);
+					//menu.setVisible(false);
+					lop.remove(0);
+						}else
+						{
+							
+							while(!lop.isEmpty()){
+								lop.removeFirst();
+							}
+							step.setVisible(false);
+							control.setingame(false);	
+							first=false;
+							control.endGame();
+							
+							initmenu();
+							menu.setVisible(control.getingameg());
+							if(userName.length()>1)
+								control.setUser(userName);
+						}
+					}catch(Exception e)
+					{
+						step.setVisible(false);
 						control.setingame(false);	
 						first=false;
 						control.endGame();
@@ -164,30 +204,38 @@ public class Main extends Application {
 						menu.setVisible(control.getingameg());
 						if(userName.length()>1)
 							control.setUser(userName);
-						
+						}
+					
+			}
+			
+		});
+		step.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				
+				
+				
+					System.out.println(lop.getFirst());
+					lop=control.passedmap(root, lop);
+					
+					if(lop.isEmpty()){
+					step.setVisible(false);
+					control.setingame(false);	
+					first=false;
+					control.endGame();
+					
+					initmenu();
+					menu.setVisible(control.getingameg());
+					if(userName.length()>1)
+						control.setUser(userName);
 					}
+			}
+			
 		});
 		
 	}
-	public void passedmap(){
-		List<String>op =control.isBeCho();
-		if(op!=null){
-		op.remove(0);
-		op.remove(op.size()-1);
-		root.getCenter().setVisible(false);
-		for (String string : op) {
-			control.movControl(string);
-			control.celIsPlayer();
-			control.runReloadGrid(root);
-			
-			for(int i = 0 ; i<100; i++)
-				for(int j = 0 ; j<1000 ; j++)
-					System.out.println(string);;
-				
-		}	
-		}
-		
-	}
+	LinkedList<String> lop = new LinkedList<String>();
 	
 	
 	public void subMenu(){

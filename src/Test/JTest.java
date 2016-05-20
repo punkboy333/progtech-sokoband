@@ -87,7 +87,7 @@ public class JTest {
 		
 		MapValidator mapvalidator = new MapValidator(-1 ,1, false ,i);
 		
-		assertEquals(true, mapvalidator.joe());
+		assertEquals(true, mapvalidator.joe()!=null);
 		
 	}
 

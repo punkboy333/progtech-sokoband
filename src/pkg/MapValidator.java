@@ -53,15 +53,11 @@ public class MapValidator {
 		public boolean equals(Object obj) {
 			Node other = (Node) obj;
 
-			if (this.vector != null)
+			
+		
 				if (this.player.equals(other.player))
-					 if(this.map.equals(other.map))
-					if (this.vector.equals(other.vector))
-					return true;
-			if (this.vector == null)
-				if (this.player.equals(other.player))
-					if (this.map.equals(other.map))
-					return true;
+					if (this.map == other.map)
+							return true;
 				
 			return false;
 		}
@@ -122,7 +118,7 @@ public class MapValidator {
 				String vektor = start.oplis.getFirst();
 				start.oplis.removeFirst();
 				PlayerIndex player1 = (engine.playerMove(start.player, vektor.charAt(0)));
-
+					
 				boolean isbe = false;
 				
 				
@@ -139,7 +135,7 @@ public class MapValidator {
 				}
 
 				for (Node cs = start; cs != null; cs = cs.parent) {
-					if (cs.player.equals(start1.player)) {
+					if (cs.equals(start1)) {
 						isbe = true;
 						engine.gameMap = start.map;
 						break;

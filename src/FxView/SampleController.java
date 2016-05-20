@@ -1,9 +1,15 @@
 package FxView;
 
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import DOMparser.Users;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,7 +39,24 @@ public class SampleController {
 	
 	public int [][] gameMap = null;
 	
-
+	public void pictureInit(){
+		String fileinput= System.getProperties().getProperty("user.dir").toString();
+		String [] picturename ={"cel.jpg","ut.jpg","fal.jpg","jatekos.jpg","kocka.jpg"};
+		Path path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Files/"+picturename[0]);
+		img4=new Image(path.toFile().toURI().toString());
+		path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Files/"+picturename[4]);
+		img3=new Image(path.toFile().toURI().toString());
+		
+		path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Files/"+picturename[3]);
+		img2=new Image(path.toFile().toURI().toString());
+		
+		path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Files/"+picturename[1]);		
+		img1=new Image(path.toFile().toURI().toString());
+		
+		path = FileSystems.getDefault().getPath(fileinput,"classes/InGame/Files/"+picturename[2]);
+		img0=new Image(path.toFile().toURI().toString());
+		
+	}
 	Engine engine = new Engine();
 	
 		public SampleController() {
@@ -48,6 +71,34 @@ public class SampleController {
 			gameMap[cel.getX()][cel.getY()]=4;
 	}
 	
+	public void reLoadActual(Node root){
+		System.out.println("\naktualmap:"+engine.getLevel());
+		newGame(engine.getLevel(), 1, root);
+	}
+	
+	public LinkedList<String> passedmap(Node root , LinkedList<String> op ){
+		//newGame(engine.getLevel(),1, root);
+
+		if(op!=null){
+		String string = op.removeFirst();
+			movControl(string);
+			celIsPlayer();
+			runReloadGrid(root);
+			root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+
+				@Override
+				public void handle(KeyEvent event) {
+					;
+				}
+			});
+			
+				
+		}
+		return op;
+	}
+	
+
 	
 	public void setingame(boolean ingame){
 		this.ingame=ingame;
@@ -116,8 +167,10 @@ public class SampleController {
 		int [][] map=gameMap;
 		MapValidator mapvalid = new MapValidator(0, hardlevel,false, map);
 		List<String> op = mapvalid.joe();
+		try{
 		for(int i = 0 ; i<op.size();i++)
-		System.out.println(op.get(i));
+		System.out.println(op.get(i));}
+		catch(Exception e){;}
 		return op;
 	}
 	

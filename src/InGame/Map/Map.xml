@@ -137,7 +137,7 @@
 
 			<row>
 				<colum>0</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>1</colum>
 				<colum>4</colum>
 				<colum>1</colum>
@@ -147,8 +147,8 @@
 
 			<row>
 				<colum>0</colum>
-				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
+				<colum>0</colum>
 				<colum>0</colum>
 				<colum>1</colum>
 				<colum>1</colum>
@@ -157,31 +157,31 @@
 
 			<row>
 				<colum>0</colum>
+				<colum>0</colum>
 				<colum>1</colum>
 				<colum>1</colum>
 				<colum>1</colum>
-				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>0</colum>
 			</row>
 
 			<row>
 				<colum>0</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>1</colum>
 				<colum>3</colum>
 				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>0</colum>
 			</row>
 
 			<row>
 				<colum>0</colum>
-				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
+				<colum>0</colum>
 				<colum>2</colum>
 				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>0</colum>
 			</row>
 
