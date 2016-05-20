@@ -147,8 +147,8 @@
 
 			<row>
 				<colum>0</colum>
-				<colum>1</colum>
-				<colum>1</colum>
+				<colum>0</colum>
+				<colum>0</colum>
 				<colum>0</colum>
 				<colum>1</colum>
 				<colum>1</colum>
@@ -178,7 +178,7 @@
 			<row>
 				<colum>0</colum>
 				<colum>0</colum>
-				<colum>1</colum>
+				<colum>0</colum>
 				<colum>2</colum>
 				<colum>1</colum>
 				<colum>0</colum>
